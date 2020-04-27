@@ -1,16 +1,6 @@
 var User = require('../models/user');
 var errorHandler = require('../helpers/dbErrorHandler');
 
-//Create new user
-exports.create = function(req, res) {
-  const newUser = new User(req.body);
-  newUser.save(function(err, createdUser){
-    if(err) {
-      return (res.status(400).json({error: errorHandler(err)}));
-    }
-    res.status(200).json({message: "Successfully signed up!"});
-  });
-};
 
 //List all users
 exports.list = function (req, res) {
@@ -34,6 +24,7 @@ exports.userById = function(req, res, next) {
     next();
   });
 };
+
 exports.read = function(req, res) {
   //removing sensitive infomation
   req.profile.hashed_password = undefined;
