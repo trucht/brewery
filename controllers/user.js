@@ -35,28 +35,28 @@ exports.read = function(req, res) {
 };
 
 //Update user
-exports.update = function(req, res, next) {
-  var user = req.profile;
-  user = _.extend(user, req.body);
-  User.findByIdAndUpdate(user._id, user, function(err, updatedUser){
+exports.update = function(req, res) {
+  var user = req.body
+  var userId = req.params.userId;
+  User.findByIdAndUpdate(userId, user, {new: true}, function(err, updatedUser){
     if(err) {
       return res.status(400).json({error: errorHandler.getErrorMessage(err)});
     }
     updatedUser.hashed_password = undefined;
     updatedUser.salt = undefined;
-    res.json(updatedUser);
+    return res.json(updatedUser);
   });
 };
 
 //Delete user
-exports.delete = function(req, res, next) {
-  let user = req.params.userId;
-  User.findOneAndDelete(user._id, function(err, deletedUser) {
+exports.delete = function(req, res) {
+  var userId = req.params.userId;
+  User.findByIdAndDelete(userId, function(err, deletedUser) {
     if(err) {
       return res.status(400).json({error: errorHandler.getErrorMessage(err)});
     }
     deletedUser.hashed_password = undefined;
     deletedUser.salt = undefined;
-    res.json(deletedUser);
+    return res.json({message: "Delete user successful"});
   });
 };

@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var crypto = require('crypto');
+var mongoose = require("mongoose");
+var crypto = require("crypto");
 
 var UserSchema = new mongoose.Schema(
   {
@@ -7,76 +7,80 @@ var UserSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      maxlength: 30
+      maxlength: 50,
     },
     phone: {
       type: String,
       trim: true,
       required: true,
-      uniqued: true
+      uniqued: true,
     },
     email: {
       type: String,
       trim: true,
       required: true,
       uniqued: true,
-      match: [/.+\@.+\..+/, 'Please fill a valid email address'],
     },
     role: {
-      type: String,
-      required: true,
-      enum: ['admin', 'customer']
+      type: Number,
+      default: 0,
     },
     hashed_password: {
       type: String,
-      required: true
+      required: true,
     },
-    salt: String
+    salt: String,
+    history: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
-UserSchema.virtual('password')
-  .set(function(password) {
+UserSchema.virtual("password")
+  .set(function (password) {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encryptPassword(password);
   })
-  .get(function() {
+  .get(function () {
     return this._password;
   });
 
-UserSchema.path('hashed_password').validate(function(v) {
+UserSchema.path("hashed_password").validate(function (v) {
   if (this._password && this._password.length < 6) {
-    this.invalidate('password', 'Password must be at least 6 characters.');
+    this.invalidate("password", "Password must be at least 6 characters.");
   }
   if (this.isNew && !this._password) {
-    console.log("this._password", this._password);
-    console.log("this.isNew", this.isNew);
-    this.invalidate('password', 'Password is required');
+    this.invalidate("password", "Password is required");
   }
 }, null);
 
+UserSchema.method('authenticate', function (plainText) {
+  return this.encryptPassword(plainText) === this.hashed_password;
+})
+
 UserSchema.methods = {
-  authenticate: function(plainText) {
+  authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
-  encryptPassword: function(password) {
+  encryptPassword: function (password) {
     if (!password) {
-      return '';
+      return "";
     }
     try {
       return crypto
-        .createHmac('sha1', this.salt)
+        .createHmac("sha1", this.salt)
         .update(password)
-        .digest('hex');
+        .digest("hex");
     } catch (err) {
-      return '';
+      return "";
     }
   },
-  makeSalt: function() {
-    return Math.round(new Date().valueOf() * Math.random()) + '';
-  }
+  makeSalt: function () {
+    return Math.round(new Date().valueOf() * Math.random()) + "";
+  },
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);

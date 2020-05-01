@@ -12,19 +12,20 @@ var mongoose = require("mongoose");
 //Routes
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var authRouter = require("./routes/auth");
 
 
 //MongoDB Setup
 mongoose.connect("mongodb://localhost:27017/brewery", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {
   console.log("Database Connected...");
-  console.log(process.env);
 });
 
 //Middlewares
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes middleware
 app.use("/", indexRouter);
 app.use("/", usersRouter);
+app.use("/", authRouter);
 
 
 

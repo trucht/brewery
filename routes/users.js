@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/user');
+const {userValidationRules, validate} = require('../validator');
 
 /* GET users listing. */
-router.route('/api/users')
-  .get(userController.list)
+router.route('/users')
+  .get(userController.list);
 
-router.route('api/users/:userId')
-  .put(userController.update);
+router.route('/users/:userId')
+  .get(userController.userById, userController.read)
+  .put(userValidationRules(), validate, userController.update)
+  .delete(userController.delete);
 
 module.exports = router;
+
