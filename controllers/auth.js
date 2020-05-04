@@ -1,11 +1,22 @@
-var jwt = require("jsonwebtoken");
-var expressJwt = require("express-jwt");
+const User = require("../models/user");
+const { errorHandler } = require("../helpers/dbErrorHandler");
+
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 
-var User = require("../models/user");
-var { errorHandler } = require("../helpers/dbErrorHandler");
-var nodemailer = require("nodemailer");
+//Using nodemailer to send email
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  sercure: false,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD
+  }
+});
+
 
 //Sign up new user
 exports.signUp = async (req, res) => {
@@ -20,6 +31,20 @@ exports.signUp = async (req, res) => {
     createdUser.salt = undefined;
 
     return res.json(createdUser);
+  });
+
+  const message = {
+    from: 'Admin' + '<' + process.env.EMAIL + '>',
+    to: newUser.email,
+    subject: "Welcome to our store",
+    text: "Hello" + newUser.name + ", \n\nWelcome to our store."
+  };
+
+  transporter.sendMail(message, function(err, info) {
+    if(err) {
+      return res.json({error: err});
+    }
+    console.log("The message was sent");
   });
 };
 

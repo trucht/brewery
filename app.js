@@ -13,7 +13,8 @@ var mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
-var categoriesRouter = require("./routes/categories")
+var categoriesRouter = require("./routes/categories");
+var productsRouter = require("./routes/products");
 
 //MongoDB Setup
 mongoose.connect("mongodb://localhost:27017/brewery", {
@@ -41,6 +42,7 @@ app.use("/", indexRouter);
 app.use("/", usersRouter);
 app.use("/", authRouter);
 app.use("/", categoriesRouter);
+app.use("/", productsRouter);
 
 
 module.exports = app;

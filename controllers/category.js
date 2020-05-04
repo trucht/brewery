@@ -32,7 +32,7 @@ exports.read = async (req, res) =>{
 exports.create = async (req, res) => {
   const newCategory = new Category(req.body);
 
-  await newCategory.save((err, createdCategory)=> {
+  await newCategory.save((err, createdCategory) => {
     if(err) {
       return res.json({error: errorHandler(err)});
     }
@@ -59,7 +59,7 @@ exports.deleteById = async (req, res) => {
     if(err) {
       return res.json({error: errorHandler(err)});
     }
-    return res.json({message: "Delete categroy successful"});
+    return res.json({message: "Delete category successful"});
   });
 };
 
