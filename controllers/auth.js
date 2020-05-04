@@ -39,7 +39,7 @@ exports.signIn = async (req, res) => {
     const { _id, name, email, role } = user;
     return res.json({ token, user: { _id, name, email, role } });
   }
-  return res.json({ error: "Incorrect credentials" });
+  return res.json({ error: "Invalid credentials" });
 };
 
 //Sign out user

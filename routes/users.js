@@ -3,7 +3,6 @@ var router = express.Router();
 var userController = require('../controllers/user');
 const {userValidationRules, validate} = require('../validator');
 
-/* GET users listing. */
 router.route('/users')
   .get(userController.list);
 

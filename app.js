@@ -13,13 +13,14 @@ var mongoose = require("mongoose");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
-
+var categoriesRouter = require("./routes/categories")
 
 //MongoDB Setup
 mongoose.connect("mongodb://localhost:27017/brewery", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useCreateIndex: true
 });
 
 var db = mongoose.connection;
@@ -39,7 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/", usersRouter);
 app.use("/", authRouter);
-
+app.use("/", categoriesRouter);
 
 
 module.exports = app;

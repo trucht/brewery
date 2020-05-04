@@ -1,4 +1,4 @@
-var User = require('../models/user');
+ var User = require('../models/user');
 var errorHandler = require('../helpers/dbErrorHandler');
 
 
@@ -40,7 +40,7 @@ exports.update = function(req, res) {
   var userId = req.params.userId;
   User.findByIdAndUpdate(userId, user, {new: true}, function(err, updatedUser){
     if(err) {
-      return res.status(400).json({error: errorHandler.getErrorMessage(err)});
+      return res.status(400).json({error: errorHandler(err)});
     }
     updatedUser.hashed_password = undefined;
     updatedUser.salt = undefined;
@@ -53,7 +53,7 @@ exports.delete = function(req, res) {
   var userId = req.params.userId;
   User.findByIdAndDelete(userId, function(err, deletedUser) {
     if(err) {
-      return res.status(400).json({error: errorHandler.getErrorMessage(err)});
+      return res.status(400).json({error: errorHandler(err)});
     }
     deletedUser.hashed_password = undefined;
     deletedUser.salt = undefined;
