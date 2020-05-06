@@ -37,7 +37,7 @@ exports.signUp = async (req, res) => {
     from: 'Admin' + '<' + process.env.EMAIL + '>',
     to: newUser.email,
     subject: "Welcome to our store",
-    text: "Hello" + newUser.name + ", \n\nWelcome to our store."
+    text: "Hi, there" + newUser.name + ", \n\nThank you for joining us."
   };
 
   transporter.sendMail(message, function(err, info) {
