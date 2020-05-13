@@ -5,6 +5,8 @@ var path = require("path");
 //Middleware utilities
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
+const bodyParser = require('body-parser');
 
 //Database
 var mongoose = require("mongoose");
@@ -31,9 +33,15 @@ db.once("open", function() {
 });
 
 //Middlewares
+app.use(cors());
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 

@@ -21,7 +21,6 @@ const transporter = nodemailer.createTransport({
 //Sign up new user
 exports.signUp = async (req, res) => {
   const newUser = new User(req.body);
-
   await newUser.save((err, createdUser) => {
     if (err) {
       return res.status(400).json({ error: errorHandler(err) });
@@ -29,7 +28,6 @@ exports.signUp = async (req, res) => {
 
     createdUser.hashed_password = undefined;
     createdUser.salt = undefined;
-
     return res.json(createdUser);
   });
 
