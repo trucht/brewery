@@ -17,7 +17,7 @@ export const signup = async (user) => {
 
 // Login User
 export const signin = async (user) => {
-  return fetch(`/auth/signin`, {
+  return fetch(`http://localhost:3001/auth/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
