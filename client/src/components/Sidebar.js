@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import SidebarIcon from "./SidebarIcon";
 import { Transition } from "react-transition-group";
+import { Link, withRouter } from "react-router-dom";
+import { signout, isAuthenticated } from "../auth";
 
 const duration = 1000;
 
@@ -16,6 +18,12 @@ const transitionStyles = {
   exited: { opacity: 0 },
 };
 
+const isActive = (history, path) => {
+  if (history.location.pathname === path) {
+    return { color: "#129de3" };
+  } else return { color: "#000000" };
+};
+
 export default class Sidebar extends Component {
   state = {
     isOpen: false,
@@ -28,9 +36,98 @@ export default class Sidebar extends Component {
 
     return (
       <div className="sidebar">
-        <div className="sidebar-link">Search Bar</div>
-        <div className="sidebar-link">Shop</div>
-        <div className="sidebar-link">Cart</div>
+        <div className="sidebar-item">
+          <Link className="sidebar-link" style={isActive(this.props.history, "/")} to="/">
+            Home
+          </Link>
+        </div>
+
+        <div className="sidebar-item">
+          <Link
+            className="sidebar-link"
+            style={isActive(this.props.history, "/shop")}
+            to="/shop"
+          >
+            Shop
+          </Link>
+        </div>
+        {!isAuthenticated() && (
+          <Fragment>
+            <div className="sidebar-item">
+              <Link
+                className="sidebar-link"
+                style={isActive(this.props.history, "/signin")}
+                to="/signin"
+              >
+                Sign In
+              </Link>
+            </div>
+
+            <div className="sidebar-item">
+              <Link
+                className="sidebar-link"
+                style={isActive(this.props.history, "/signup")}
+                to="/signup"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </Fragment>
+        )}
+        {isAuthenticated() && (
+          <Fragment>
+            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+              <div className="sidebar-item">
+                <Link
+                  className="sidebar-link"
+                  style={isActive(this.props.history, "/user/dashboard")}
+                  to="/user/dashboard"
+                >
+                  Dashboard
+                </Link>
+              </div>
+            )}
+
+            {isAuthenticated() && isAuthenticated().user.role === 1 && (
+              <div className="sidebar-item">
+                <Link
+                  className="sidebar-link"
+                  style={isActive(this.props.history, "/admin/dashboard")}
+                  to="/admin/dashboard"
+                >
+                  Dashboard
+                </Link>
+              </div>
+            )}
+
+            <div className="sidebar-item">
+              <Link
+                className="sidebar-link"
+                style={isActive(this.props.history, "/cart")}
+                to="/cart"
+              >
+                Cart{" "}
+                {/* <sup>
+                  <small className="cart-badge">{itemTotal()}</small>
+                </sup> */}
+              </Link>
+            </div>
+
+            <div className="sidebar-item">
+              <span
+                className="sidebar-link"
+                style={{ cursor: "pointer", color: "#000000" }}
+                onClick={() =>
+                  signout(() => {
+                    this.props.history.push("/");
+                  })
+                }
+              >
+                Logout
+              </span>
+            </div>
+          </Fragment>
+        )}
       </div>
     );
   };
@@ -64,3 +161,5 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+export const SidebarWithRouter = withRouter(SidebarIcon);

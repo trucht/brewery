@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth";
+import Layout from "../components/Layout";
 
 
 
@@ -81,13 +82,12 @@ const Signin = () => {
   };
 
   return (
-    <div class="form-container">
-      <h1>Member Login</h1>
+    <Layout title="Member Login" description="Hello, Welcome Back!" className="container">
       {showError()}
       {showLoading()}
       {redirectUser()}
       {signinForm()}
-    </div>
+    </Layout>
   );
 };
 

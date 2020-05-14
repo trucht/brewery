@@ -1,58 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+
 body {
-  margin: 0;
-  padding: 0;
+
   font-family: 'Oswald', sans-serif;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 h1 {
   text-align: center;
 }
 
-/* HOME */
-.Home {
-  display: flex;
-  flex-direction: row-reverse;
+p {
+  font-size: 1.5rem;
+}
+
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 /*LAYOUT*/
 .layout {
   width: 100%;
+  font-family: 'Oswald', sans-serif;
+}
+
+.header {
+  flex-wrap: wrap;
+  height: 12rem;
+  background-color: #888888;
+}
+
+
+/* HOME */
+.content-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 /* SIDEBAR */
 .sidebar-container {
+  font-family: 'Oswald', sans-serif;
   min-height: 100vh;
   background-color: lightgray;
 }
 
 .sidebar {
-  width: 20rem;
+  width: 16rem;
 }
 
 .sidebar-link {
-  padding: 1rem;
-  font-size: 3rem;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 2rem;
   line-height: 5rem;
   text-align: right;
 }
 
-.sidebar-link:hover {
+.sidebar-item {
+  padding: 1rem;
+  width: 100%;
+  height: 5rem;
+}
+
+.sidebar-item:hover {
   border-right: 5px solid black;
   background-color: dimgrey;
 }
 
-/* SIGN UP FORM */
-.form-container {
-}
 
+/* SIGN UP FORM */
 .form {
   border: 1px solid black;
   box-shadow: 10px 10px #888888;
@@ -84,9 +105,26 @@ h1 {
   color: white;
   text-decoration: none;
   border-color: black;
-
 }
 
+/* USER DASHBOARD */
 
+.option-link {
+  border: 0.25rem solid black;
+  box-shadow: 0.5rem 0.5rem #888888;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  display: inline block;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: black;
+  line-height: 1rem;
+}
 
+.option-link:hover {
+  text-decoration: none;
+}
 
+.acc-info {
+  font-size: 1.3rem;
+}

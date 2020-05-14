@@ -1,6 +1,6 @@
 // Register User
 export const signup = async (user) => {
-  return fetch (`http://localhost:3001/auth/signup`, {
+  return fetch (`/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -15,9 +15,10 @@ export const signup = async (user) => {
     });
 };
 
+
 // Login User
 export const signin = async (user) => {
-  return fetch(`http://localhost:3001/auth/signin`, {
+  return fetch(`/auth/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { signup } from "../auth";
+import Layout from "../components/Layout";
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -111,12 +112,11 @@ const Signup = () => {
   };
 
   return (
-    <div className="form-container">
-      <h1>Create Account</h1>
+    <Layout title="Create Account" description="Welcome to Brewery" className="container">
       {showError()}
       {showSuccess()}
       {signupForm()}
-    </div>
+    </Layout>
   );
 };
 
