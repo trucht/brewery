@@ -4,11 +4,19 @@ import { Transition } from "react-transition-group";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 
-const duration = 1000;
+const duration =300;
 
 const defaultStyle = {
   transition: `opacity ${duration}ms ease-in-out`,
   opacity: 0,
+};
+
+const sideBarIsOpen = (isOpen) => {
+  if (isOpen) {
+    return {right: "0"};
+  } else {
+    return {right: "-11.5rem"};
+  }
 };
 
 const transitionStyles = {
@@ -30,88 +38,74 @@ export default class Sidebar extends Component {
   };
 
   renderSidebar = () => {
-    if (!this.state.isOpen) {
-      return null;
-    }
-
     return (
-      <div className="sidebar">
-        <div className="sidebar-item">
-          <Link className="sidebar-link" style={isActive(this.props.history, "/")} to="/">
-            Home
-          </Link>
-        </div>
+      <div>
+        <Link
+          className="sidebar-link"
+          style={isActive(this.props.history, "/")}
+          to="/"
+        >
+          Home
+        </Link>
 
-        <div className="sidebar-item">
-          <Link
-            className="sidebar-link"
-            style={isActive(this.props.history, "/shop")}
-            to="/shop"
-          >
-            Shop
-          </Link>
-        </div>
+        <Link
+          className="sidebar-link"
+          style={isActive(this.props.history, "/shop")}
+          to="/shop"
+        >
+          Shop
+        </Link>
         {!isAuthenticated() && (
           <Fragment>
-            <div className="sidebar-item">
-              <Link
-                className="sidebar-link"
-                style={isActive(this.props.history, "/signin")}
-                to="/signin"
-              >
-                Sign In
-              </Link>
-            </div>
+            <Link
+              className="sidebar-link"
+              style={isActive(this.props.history, "/signin")}
+              to="/signin"
+            >
+              Sign In
+            </Link>
 
-            <div className="sidebar-item">
-              <Link
-                className="sidebar-link"
-                style={isActive(this.props.history, "/signup")}
-                to="/signup"
-              >
-                Sign Up
-              </Link>
-            </div>
+            <Link
+              className="sidebar-link"
+              style={isActive(this.props.history, "/signup")}
+              to="/signup"
+            >
+              Sign Up
+            </Link>
           </Fragment>
         )}
         {isAuthenticated() && (
           <Fragment>
             {isAuthenticated() && isAuthenticated().user.role === 0 && (
-              <div className="sidebar-item">
-                <Link
-                  className="sidebar-link"
-                  style={isActive(this.props.history, "/user/dashboard")}
-                  to="/user/dashboard"
-                >
-                  Dashboard
-                </Link>
-              </div>
+              <Link
+                className="sidebar-link"
+                style={isActive(this.props.history, "/user/dashboard")}
+                to="/user/dashboard"
+              >
+                Dashboard
+              </Link>
             )}
 
             {isAuthenticated() && isAuthenticated().user.role === 1 && (
-              <div className="sidebar-item">
-                <Link
-                  className="sidebar-link"
-                  style={isActive(this.props.history, "/admin/dashboard")}
-                  to="/admin/dashboard"
-                >
-                  Dashboard
-                </Link>
-              </div>
-            )}
-
-            <div className="sidebar-item">
               <Link
                 className="sidebar-link"
-                style={isActive(this.props.history, "/cart")}
-                to="/cart"
+                style={isActive(this.props.history, "/admin/dashboard")}
+                to="/admin/dashboard"
               >
-                Cart{" "}
-                {/* <sup>
+                Dashboard
+              </Link>
+            )}
+
+            <Link
+              className="sidebar-link"
+              style={isActive(this.props.history, "/cart")}
+              to="/cart"
+            >
+              Cart{" "}
+              {/* <sup>
                   <small className="cart-badge">{itemTotal()}</small>
                 </sup> */}
-              </Link>
-            </div>
+            </Link>
 
             <div className="sidebar-item">
               <span
@@ -140,7 +134,7 @@ export default class Sidebar extends Component {
 
   render() {
     return (
-      <div className="sidebar-container">
+      <div className="sidebar" style={sideBarIsOpen(this.state.isOpen)}>
         <SidebarIcon
           isOpen={this.state.isOpen}
           handleClick={this.toggleSidebar}
