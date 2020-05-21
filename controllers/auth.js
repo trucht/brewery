@@ -9,21 +9,20 @@ require("dotenv").config();
 
 //Using nodemailer to send email
 const transporter = nodemailer.createTransport({
-  service: 'Gmail',
+  service: "Gmail",
   sercure: false,
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD
+    pass: process.env.EMAIL_PASSWORD,
   }
 });
-
 
 //Sign up new user
 exports.signUp = async (req, res) => {
   const newUser = new User(req.body);
   await newUser.save((err, createdUser) => {
     if (err) {
-      return res.status(400).json({ error: errorHandler(err) });
+      return res.json({ error: errorHandler(err) });
     }
 
     createdUser.hashed_password = undefined;
@@ -31,18 +30,18 @@ exports.signUp = async (req, res) => {
     return res.json(createdUser);
   });
 
+  //Email content
   const message = {
-    from: 'Admin' + '<' + process.env.EMAIL + '>',
+    from: "Beer Brewery",
     to: newUser.email,
     subject: "Welcome to our store",
-    text: "Hi, there" + newUser.name + ", \n\nThank you for joining us."
+    text: "Hi, there" + newUser.name + ", \n\nThis is Beer Brewery, thank you for joining us.",
   };
 
-  transporter.sendMail(message, function(err, info) {
-    if(err) {
-      return res.json({error: err});
+  transporter.sendMail(message, function (err, info) {
+    if (err) {
+      return res.json({ error: err });
     }
-    console.log("The message was sent");
   });
 };
 
@@ -50,8 +49,8 @@ exports.signUp = async (req, res) => {
 exports.signIn = async (req, res) => {
   const { email, password } = req.body;
   let user = await User.findOne({ email: req.body.email });
-  if(!user) {
-    return res.json({error: "user not found"});
+  if (!user) {
+    return res.json({ error: "User not found" });
   }
 
   if (user.authenticate(password)) {

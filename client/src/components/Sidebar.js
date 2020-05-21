@@ -117,7 +117,7 @@ export default class Sidebar extends Component {
                   })
                 }
               >
-                Logout
+                Sign Out
               </span>
             </div>
           </Fragment>

@@ -1,5 +1,5 @@
- var User = require('../models/user');
-var errorHandler = require('../helpers/dbErrorHandler');
+const User = require('../models/user');
+const errorHandler = require('../helpers/dbErrorHandler');
 
 
 //List all users
@@ -25,6 +25,7 @@ exports.userById = function(req, res, next) {
   });
 };
 
+//Get a single user
 exports.read = function(req, res) {
   //removing sensitive infomation
   req.profile.hashed_password = undefined;

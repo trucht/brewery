@@ -19,7 +19,7 @@ var categoriesRouter = require("./routes/categories");
 var productsRouter = require("./routes/products");
 
 //MongoDB Setup
-mongoose.connect("mongodb://localhost:27017/brewery", {
+mongoose.connect("mongodb://127.0.0.1:27017/brewerydb", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,

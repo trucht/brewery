@@ -46,7 +46,7 @@ const UserDashboard = () => {
 
   const userInfo = () => {
     return (
-      <div className="">
+      <div>
         <h2 className="font-weight-bold mb-5">Account Information</h2>
         <div className="acc-info ml-3">
           <p className="">{name}</p>

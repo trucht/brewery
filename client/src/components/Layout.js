@@ -13,9 +13,9 @@ const Layout = ({
   return (
     <div className="d-flex">
       <div className="layout">
-        <div className="header py-5">
+        <div className="header pl-3 py-5">
           <h1>{title}</h1>
-          <p className="text-center">{description}</p>
+          <p>{description}</p>
         </div>
         <div className={className}>{children}</div>
       </div>

@@ -8,11 +8,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-h1 {
-  text-align: center;
-}
-
 p {
   font-size: 1.5rem;
 }
@@ -104,14 +99,16 @@ p {
 /* USER DASHBOARD */
 
 .option-link {
+  margin-bottom: 2rem;
   border: 0.25rem solid black;
   box-shadow: 0.5rem 0.5rem #888888;
   padding: 1.5rem;
-  display: inline block;
+  display: block;
   font-size: 1.5rem;
   text-decoration: none;
   color: black;
   line-height: 1rem;
+  width: 70%;
 }
 
 .option-link:hover {
