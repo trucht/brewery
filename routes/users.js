@@ -1,15 +1,37 @@
-var express = require('express');
-var router = express.Router();
-var userController = require('../controllers/user');
-const {userValidationRules, validate} = require('../validator');
+const express = require("express");
+const router = express.Router();
+const { requireSignin, isAdmin, isAuth } = require("../controllers/auth");
+const {
+  list,
+  userById,
+  read,
+  remove,
+  update,
+  purchasedHistory,
+} = require("../controllers/user");
 
-router.route('/users')
-  .get(userController.list);
+router.get(
+  "/secret/:userId",
+  requireSignin,
+  isAuth,
+  isAdmin,
+  async (req, res) => {
+    res.json({ user: req.profile });
+  }
+);
 
-router.route('/users/:userId')
-  .get(userController.userById, userController.read)
-  .put(userValidationRules(), validate, userController.update)
-  .delete(userController.delete);
+router.route("/users").get(requireSignin, isAuth, isAdmin, list);
+
+router
+  .route("/users/:userId")
+  .get(requireSignin, isAuth, read)
+  .put(requireSignin, isAuth, update)
+  .delete(requireSignin, isAuth, remove);
+
+router
+  .route("/users/:userId/orders")
+  .get(requireSignin, isAuth, purchasedHistory);
+
+router.param("userId", userById);
 
 module.exports = router;
-

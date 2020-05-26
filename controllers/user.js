@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const {Order} = require('../models/order');
+
 const errorHandler = require('../helpers/dbErrorHandler');
 
 
@@ -6,21 +8,21 @@ const errorHandler = require('../helpers/dbErrorHandler');
 exports.list = function (req, res) {
   User.find({}, function(err, usersList) {
     if(err) {
-      return res.status(400).json({error: errorHandler(err)});
+      return res.json({error: errorHandler(err)});
     }
     res.json(usersList);
-  }).select('name email phone role updated created');
+  }).select("name email phone role updated created");
 };
 
 
-//Get user by userId
+//Find user by userId
 exports.userById = function(req, res, next) {
-  const userId = req.params.userId;
-  User.findById(userId, function(err, user){
-    if(err || !user) {
+  const userId = req.profile._id;
+  User.findById(userId, function(err, data){
+    if(err || !data) {
       return res.status(401).json({error: "User not found"});
     }
-    req.profile = user;
+    req.profile = data;
     next();
   });
 };
@@ -38,7 +40,7 @@ exports.read = function(req, res) {
 //Update user
 exports.update = function(req, res) {
   var user = req.body
-  var userId = req.params.userId;
+  var userId = req.profile._id;
   User.findByIdAndUpdate(userId, user, {new: true}, function(err, updatedUser){
     if(err) {
       return res.status(400).json({error: errorHandler(err)});
@@ -50,8 +52,8 @@ exports.update = function(req, res) {
 };
 
 //Delete user
-exports.delete = function(req, res) {
-  var userId = req.params.userId;
+exports.remove = function(req, res) {
+  var userId = req.profile._id;
   User.findByIdAndDelete(userId, function(err, deletedUser) {
     if(err) {
       return res.status(400).json({error: errorHandler(err)});
@@ -61,3 +63,16 @@ exports.delete = function(req, res) {
     return res.json({message: "Delete user successful"});
   });
 };
+
+//Purchase history of the user
+exports.purchasedHistory = function (req, res) {
+  Order.find({user: req.profile._id})
+    .populate("user", "_id name")
+    .sort("_created")
+    .exec((err, orders) => {
+      if(err) {
+        return res.json({error: errorHandler(err)});
+      }
+      res.json(orders);
+    });
+}
