@@ -17,7 +17,7 @@ const sideBarIsOpen = (isOpen) => {
   } else {
     return {right: "-11.5rem"};
   }
-};
+}
 
 const transitionStyles = {
   entering: { opacity: 1 },

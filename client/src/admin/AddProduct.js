@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Layout from '../components/Layout';
 import {isAuthenticated} from '../auth';
-// import {createProduct, getCategories} from './AdminAPI';
+import {createProduct, getCategories} from './AdminAPI';
 
 const AddProduct = () => {
 
@@ -25,24 +25,24 @@ const AddProduct = () => {
         loading, error, createdProduct, formData} = values;
 
     // load categories and form set data
-    // const init = () => {
-    //     getCategories().then(data => {
-    //         if(data.err)
-    //         {
-    //             setValues({...values, error: data.err})
-    //         }
-    //         else
-    //         {
-    //             setValues({...values, categories: data, formData: new FormData()})
-    //         }
-    //     })
-    // }
+    const init = () => {
+        getCategories().then(data => {
+            if(data.err)
+            {
+                setValues({...values, error: data.err})
+            }
+            else
+            {
+                setValues({...values, categories: data, formData: new FormData()})
+            }
+        })
+    }
 
-    // useEffect(() => {
-    //     init();
+    useEffect(() => {
+        init();
 
-    //     // eslint-disable-next-line
-    // }, [])
+        // eslint-disable-next-line
+    }, [])
 
 
     const handleChange = name => e => {
@@ -55,21 +55,21 @@ const AddProduct = () => {
         e.preventDefault();
         setValues({...values, error: '', loading: true});
 
-        // createProduct(user._id, token, formData)
-        // .then(data => {
-        //     if(data.err)
-        //     {
-        //         setValues({...values, error: data.err});
-        //     }
+        createProduct(user._id, token, formData)
+        .then(data => {
+            if(data.err)
+            {
+                setValues({...values, error: data.err});
+            }
 
-        //     else
-        //     {
-        //         setValues({
-        //             ...values, name: '', description: '', photo: '', price: '', quantity: 0, loading: '',
-        //             category: '', shipping: '',createdProduct: data.name
-        //         })
-        //     }
-        // })
+            else
+            {
+                setValues({
+                    ...values, name: '', description: '', photo: '', price: '', quantity: 0, loading: '',
+                    category: '', shipping: '',createdProduct: data.name
+                })
+            }
+        })
     }
 
     const newProductForm = () => (

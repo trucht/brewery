@@ -17,7 +17,7 @@ exports.list = function (req, res) {
 
 //Find user by userId
 exports.userById = function(req, res, next) {
-  const userId = req.profile._id;
+  const userId = req.params.userId;
   User.findById(userId, function(err, data){
     if(err || !data) {
       return res.status(401).json({error: "User not found"});

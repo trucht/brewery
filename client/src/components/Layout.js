@@ -11,7 +11,7 @@ const Layout = ({
 
   const history = useHistory();
   return (
-    <div className="d-flex">
+    <div className="d-flex position-relative">
       <div className="layout">
         <div className="header pl-3 py-5">
           <h1>{title}</h1>

@@ -42,10 +42,9 @@ p {
   position: absolute;
   font-family: 'Oswald', sans-serif;
   background-color: lightgray;
-  min-height: 100vh;
+  min-height: 100%;
   width: 16rem;
   transition: 0.3s;
-
 }
 
 .sidebar-link {

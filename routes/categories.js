@@ -12,7 +12,7 @@ router.route('/categories')
   .get(list);
 
 router.route('/categories/:userId')
-  .post(create, requireSignin, isAuth, isAdmin);
+  .post(requireSignin, isAuth, isAdmin, create);
 
 router.route('/categories/:categoryId/:userId')
   .put(update, requireSignin, isAuth, isAdmin)
