@@ -10,6 +10,8 @@ const AddProduct = () => {
         name: '',
         description: '',
         price: '',
+        abu: 0,
+        ibv: 0,
         categories: [],
         category: '',
         shipping: '',
@@ -21,7 +23,7 @@ const AddProduct = () => {
         formData: ''
     });
 
-    const {name, description, price, categories, category, shipping, quantity,
+    const {name, description, abu, ibv, price, categories, category, shipping, quantity,
         loading, error, createdProduct, formData} = values;
 
     // load categories and form set data
@@ -65,7 +67,7 @@ const AddProduct = () => {
             else
             {
                 setValues({
-                    ...values, name: '', description: '', photo: '', price: '', quantity: 0, loading: '',
+                    ...values, name: '', description: '', photo: '', abu: 0, ibv: 0, price: '', quantity: 0, loading: '',
                     category: '', shipping: '',createdProduct: data.name
                 })
             }
@@ -90,6 +92,16 @@ const AddProduct = () => {
             <div className="form-group">
                 <label>Description</label>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
+            </div>
+
+            <div className="form-group">
+                <label>abu</label>
+                <input onChange={handleChange('abu')} type="number" className="form-control" value={abu} />
+            </div>
+
+            <div className="form-group">
+                <label>ibv</label>
+                <input onChange={handleChange('ibv')} type="number" className="form-control" value={ibv} />
             </div>
 
             <div className="form-group">

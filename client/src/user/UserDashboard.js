@@ -1,112 +1,110 @@
-// import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import Layout from "../components/Layout";
-// import { isAuthenticated } from "../auth";
-// import { getPurchaseHistory } from "./UserAPI";
-// import moment from "moment";
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import Layout from '../components/Layout';
+import {isAuthenticated} from '../auth';
+import {getPurchaseHistory} from './UserAPI';
+import moment from "moment";
 
-// const UserDashboard = () => {
-//   const {
-//     user: { _id, name, email, role },
-//     token,
-//   } = isAuthenticated();
+const UserDashboard = () => {
 
-//   const [history, setHistory] = useState([]);
+    const {user: {_id, name, email, role}, token} = isAuthenticated();
 
-//   // const init = (userId, token) => {
-//   //     getPurchaseHistory(userId, token).then(data => {
-//   //         if(data.error)
-//   //         {
-//   //             console.log(data.error)
-//   //         }
-//   //         else
-//   //         {
-//   //             setHistory(data);
-//   //         }
-//   //     })
-//   // }
+    const [history, setHistory] = useState([]);
 
-//   // useEffect(() => {
-//   //     init(_id, token)
-//   //     //eslint-disable-next-line
-//   // }, [])
+    const init = (userId, token) => {
+        getPurchaseHistory(userId, token).then(data => {
+            if(data.error)
+            {
+                console.log(data.error)
+            }
+            else
+            {
+                setHistory(data);
+            }
+        })
+    }
 
-//   const userOptions = () => {
-//     return (
-//       <div className="d-flex flex-wrap">
-//         <Link to="/cart" className="option-link">
-//           My Shopping Cart
-//         </Link>
-//         <Link to={`/profile/${_id}`} className="option-link">
-//           Update Profile
-//         </Link>
-//       </div>
-//     );
-//   };
+    useEffect(() => {
+        init(_id, token)
+        //eslint-disable-next-line
+    }, [])
 
-//   const userInfo = () => {
-//     return (
-//       <div>
-//         <h2 className="font-weight-bold mb-5">Account Information</h2>
-//         <div className="acc-info ml-3">
-//           <p className="">{name}</p>
-//           <p className="">{email}</p>
-//           <p className="">{role === 1 ? "Admin" : `User ID: ${_id}`}</p>
-//         </div>
-//       </div>
-//     );
-//   };
+    const userLinks = () => {
+        return (
+            <div className="card mb-5">
+                <h4 className="card-header text-center">User Links</h4>
+                <ul className="list-group">
+                    <li className="list-group-item"><Link to="/cart" className="nav-link">My Shopping Cart</Link></li>
+                    <li className="list-group-item"><Link to={`/profile/${_id}`} className="nav-link">Update Profile</Link></li>
+                </ul>
 
-//   const purchaseHistory = (history) => {
-//     return (
-//       <div className="mt-5">
-//         <h2 className="font-weight-bold">Purchase history</h2>
-//         {/* <ul className="">
-//                     <li className="">
-//                         {history.map((h, i) => {
-//                             return (
-//                                 <div>
-//                                     <hr />
-//                                     {h.products.map((p, i) => {
-//                                         return (
-//                                             <div key={i}>
-//                                                 <h6>Product name: {p.name}</h6>
-//                                                 <h6>
-//                                                     Product price: ${p.price}
-//                                                 </h6>
-//                                                 <h6>
-//                                                     Purchased date:{" "}
-//                                                     {moment(
-//                                                         p.createdAt
-//                                                     ).fromNow()}
-//                                                 </h6>
-//                                             </div>
-//                                         );
-//                                     })}
-//                                 </div>
-//                             );
-//                         })}
-//                     </li>
-//                 </ul> */}
-//       </div>
-//     );
-//   };
+            </div>
+        )
+    }
 
-//   return (
-//     <Layout
-//       title="Dashboard"
-//       description={`Welcome, ${name}`}
-//       className="container"
-//     >
-//       <div className="row">
-//         <div className="col-sm-4">{userOptions()}</div>
-//         <div className="col-sm-8">
-//           {userInfo()}
-//           {purchaseHistory()}
-//         </div>
-//       </div>
-//     </Layout>
-//   );
-// };
+    const userInfo = () => {
+        return (
+            <div className="card mb-5">
+            <h3 className="card-header text-center">User Information</h3>
+            <ul className="list-group">
+                <li className="list-group-item">{name}</li>
+                <li className="list-group-item">{email}</li>
+                <li className="list-group-item">{role === 1 ? 'Admin': `User id : ${_id}`}</li>
+            </ul>
+            </div>
+        )
+    }
 
-// export default UserDashboard;
+    const purchaseHistory = history => {
+        return (
+            <div className="card mb-5">
+                <h3 className="card-header">Purchase history</h3>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        {history.map((h, i) => {
+                            return (
+                                <div>
+                                    <hr />
+                                    {h.products.map((p, i) => {
+                                        return (
+                                            <div key={i}>
+                                                <h6>Product name: {p.name}</h6>
+                                                <h6>
+                                                    Product price: ${p.price}
+                                                </h6>
+                                                <h6>
+                                                    Purchased date:{" "}
+                                                    {moment(
+                                                        p.createdAt
+                                                    ).fromNow()}
+                                                </h6>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        })}
+                    </li>
+                </ul>
+            </div>
+        );
+    };
+
+
+    return (
+        <Layout title="Dashboard" description={`Welcome, ${name}`} className="container-fluid">
+            <div className="row">
+                <div className="xs-col-12 col-sm-4">
+                    {userLinks()}
+                </div>
+
+                <div className="xs-col-12 col-sm-8">
+                    {userInfo()}
+                    {purchaseHistory(history)}
+                </div>
+            </div>
+        </Layout>
+    )
+}
+
+export default UserDashboard;

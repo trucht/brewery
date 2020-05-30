@@ -21,6 +21,8 @@ const {
 
 router.route("/products").get(list);
 
+router.route("/products/:productId").get(read);
+
 router
   .route("/products/:userId")
   .post(requireSignin, isAuth, isAdmin, create);

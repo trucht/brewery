@@ -27,36 +27,54 @@ exports.create = async (req, res) => {
   form.keepExtensions = true;
 
   form.parse(req, (err, fields, files) => {
-  console.log("exports.create -> fields", fields);
     if (err) {
       return res.json({ error: "Image could not be uploaded" });
     }
-  });
 
-  //Cheking all fields
-  const { name, description, abu, ibv, price, category, quantity } = fields;
+    //Cheking all fields
+    const {
+      name,
+      description,
+      abu,
+      ibv,
+      price,
+      category,
+      shipping,
+      quantity,
+    } = fields;
 
-  if (
-    [name, description, abu, ibv, price, category, quantity].includes(undefined)
-  ) {
-    return res.json({ error: "All fields are required" });
-  }
-
-  const newProduct = new Product(fields);
-
-  if (files.photo) {
-    // Validate file size less than 2 MB
-    if (files.photo.size > 2000000) {
-      return res.json({ error: "File size should be less than 2mb" });
+    if (
+      [
+        name,
+        description,
+        abu,
+        ibv,
+        price,
+        category,
+        shipping,
+        quantity,
+      ].includes(undefined)
+    ) {
+      return res.json({ error: "All fields are required" });
     }
-    product.photo.data = fs.readFileSync(file.photo.path);
-    product.photo.contentType = files.photo.type;
-  }
-  await newProduct.save((err, createdProduct) => {
-    if (err) {
-      return res.json({ error: errorhandler(err) });
+
+    const newProduct = new Product(fields);
+
+    if (files.photo) {
+      // Validate file size less than 2 MB
+      if (files.photo.size > 2000000) {
+        return res.json({ error: "File size should be less than 2mb" });
+      }
+      newProduct.photo.data = fs.readFileSync(files.photo.path);
+      newProduct.photo.contentType = files.photo.type;
     }
-    return res.json({ product: createdProduct });
+
+    newProduct.save((err, createdProduct) => {
+      if (err) {
+        return res.json({ error: errorhandler(err) });
+      }
+      return res.json({ product: createdProduct });
+    });
   });
 };
 

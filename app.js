@@ -12,11 +12,11 @@ const bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 
 //Routes
-var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
 var categoriesRouter = require("./routes/categories");
 var productsRouter = require("./routes/products");
+var ordersRouter = require("./routes/orders");
 
 //MongoDB Setup
 mongoose.connect("mongodb://127.0.0.1:27017/brewerydb", {
@@ -46,11 +46,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes middleware
-app.use("/", indexRouter);
 app.use("/", usersRouter);
 app.use("/", authRouter);
 app.use("/", categoriesRouter);
 app.use("/", productsRouter);
+app.use("/", ordersRouter);
 
-
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+ });
+ // error handler middleware
+ app.use((error, req, res, next) => {
+   res.status(error.status || 500).send({
+    error: {
+    status: error.status || 500,
+    message: error.message || 'Internal Server Error',
+   },
+  });
+ });
 module.exports = app;

@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { isAuthenticated } from "../auth";
 import { createCategory } from "./AdminAPI";
 
-const AddCateogary = () => {
+const AddCategory = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -78,4 +78,4 @@ const AddCateogary = () => {
   );
 };
 
-export default AddCateogary;
+export default AddCategory;

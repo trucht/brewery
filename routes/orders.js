@@ -8,7 +8,7 @@ const {
   create,
   addOrderToUserHistory,
   list,
-  getStatusValues,
+  statusValues,
   UpdateOrderStatus,
   orderById,
 } = require("../controllers/order");
@@ -19,19 +19,14 @@ router
   .post(
     requireSignin,
     isAuth,
-    isAdmin,
     addOrderToUserHistory,
     decreaseQuantity,
     create
   );
 
-router.get(
-  "orders/status-value/:userId",
-  requireSignin,
-  isAuth,
-  isAdmin,
-  getStatusValues
-);
+router
+  .route("orders/status-values/:userId")
+  .get(requireSignin, isAuth, isAdmin, statusValues);
 
 router.put(
   "orders/:orderId/status/:userId",
@@ -40,5 +35,8 @@ router.put(
   isAdmin,
   UpdateOrderStatus
 );
+
+router.param("userId", userById);
+router.param('orderId', orderById)
 
 module.exports = router;
