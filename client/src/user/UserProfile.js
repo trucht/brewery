@@ -15,7 +15,7 @@ const UserProfile = ({match}) => {
         success: false
     });
 
-    const {name, email, password, error, success, loading} = values;
+    const {name, email, password, success, loading} = values;
     const {token} = isAuthenticated()
 
     const init = (userId) => {
@@ -69,7 +69,7 @@ const UserProfile = ({match}) => {
                 <input type="password" value={password} onChange={handleChange('password')} className="form-control"/>
             </div>
 
-            <button onClick={clickSubmit} className="btn btn-primary">Submit</button>
+            <button onClick={clickSubmit} className="btn btn-outline-dark">Submit</button>
         </form>
     )
 
@@ -93,7 +93,7 @@ const UserProfile = ({match}) => {
     }, [])
 
     return (
-        <Layout title="My Profile" description="Update your profile" className="container-fluid">
+        <Layout title="My Profile" description="Update your profile" className="container py-5">
             <h2>Profile Update</h2>
             {showLoading()}
             {profileUpdate(name ,email, password)}

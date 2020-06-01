@@ -17,6 +17,8 @@ var authRouter = require("./routes/auth");
 var categoriesRouter = require("./routes/categories");
 var productsRouter = require("./routes/products");
 var ordersRouter = require("./routes/orders");
+var braintreeRouter = require("./routes/braintree");
+
 
 //MongoDB Setup
 mongoose.connect("mongodb://127.0.0.1:27017/brewerydb", {
@@ -51,6 +53,8 @@ app.use("/", authRouter);
 app.use("/", categoriesRouter);
 app.use("/", productsRouter);
 app.use("/", ordersRouter);
+app.use("/", braintreeRouter);
+
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

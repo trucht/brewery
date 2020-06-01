@@ -58,7 +58,7 @@ const Product = (props) => {
             product.description &&
             product.description.substring(0, 100)
           }
-          className="container-fluid"
+          className="container py-5"
         >
           <div className="row">
             <div className="col-8">

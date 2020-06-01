@@ -33,7 +33,7 @@ const Checkout = ({ products }) => {
   };
 
   useEffect(() => {
-    // getToken(userId, token);
+    getToken(userId, token);
     //eslint-disable-next-line
   }, []);
 
@@ -143,6 +143,7 @@ const Checkout = ({ products }) => {
               },
             }}
             onInstance={(instance) => (data.instance = instance)}
+            className="d-relative"
           />
           <button
             onClick={buy}
@@ -179,11 +180,7 @@ const Checkout = ({ products }) => {
 
   return (
     <div>
-      <h2>Total: ₹ {getTotal()}</h2>
-      <p>
-        Try checking out with a dummy credit card number like 4111 1111 1111
-        1111 and any expiration date and cvv
-      </p>
+      <h2>Total: {getTotal()} VNĐ</h2>
       {showLoading(data.loading)}
       {showSuccess(data.success)}
       {showError(data.error)}

@@ -133,7 +133,7 @@ const AddProduct = () => {
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
 
-            <button className="btn btn-outline-primary">Create Product</button>
+            <button className="btn btn-outline-dark">Create Product</button>
         </form>
     )
 
@@ -157,7 +157,7 @@ const AddProduct = () => {
 
 
     return (
-        <Layout title="Add a new Product" description={`Ready to add a new Product?`}>
+        <Layout title="Add a new Product" description={`Ready to add a new Product?`} className="py-5">
             <div className="row">
                 <div className="col-md-8 offset-md-2">
                     {showError()}

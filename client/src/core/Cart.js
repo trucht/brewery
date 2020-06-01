@@ -12,7 +12,7 @@ const Cart = () => {
   const noItemsMessage = () => {
     return (
       <div>
-        <h2>Your cart is empty</h2>
+        <h2 className="my-3">Your cart is empty</h2>
         <br />
         <Link to="/shop">Start Shopping now!</Link>
       </div>
@@ -22,8 +22,7 @@ const Cart = () => {
   const showItems = (items) => {
     return (
       <div>
-        <h2>Your cart has {`${items.length}`} items</h2>
-        <hr />
+        <h2 className="my-3">Your cart has {`${items.length}`} items</h2>
         {items.map((p, i) => (
           <Card
             key={i}
@@ -47,7 +46,7 @@ const Cart = () => {
     <Layout
       title="My Cart"
       description="Manage your cart items. Add, Remove, Checkout or continue shopping"
-      className="container-fluid"
+      className="container py-5"
     >
       <div className="row">
         <div className="col-6">
@@ -55,8 +54,7 @@ const Cart = () => {
         </div>
 
         <div className="col-6">
-          <h2 className="mb-4">Cart summary</h2>
-          <hr />
+          <h2 className="my-3">Cart summary</h2>
           <Checkout products={items} />
         </div>
       </div>

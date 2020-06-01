@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
-import moment from "moment";
 import { addItem, updateItem, removeItem } from "../core/CartHelpers";
 
 const Card = ({
@@ -20,7 +19,7 @@ const Card = ({
     return (
       showViewProductButton && (
         <Link to={`/product/${product._id}`} className="mr-2">
-          <button className="btn btn-outline-primary mt-2 mb-2 mr-2">
+          <button className="btn btn-outline-info mt-3 mb-3 mr-2">
             View Product
           </button>
         </Link>
@@ -45,7 +44,7 @@ const Card = ({
       showAddToCartButton && (
         <button
           onClick={addToCart}
-          className="btn btn-outline-warning mt-2 mb-2"
+          className="btn btn-outline-warning mt-3 mb-3"
         >
           Add to Cart
         </button>
@@ -61,7 +60,7 @@ const Card = ({
             removeItem(product._id);
             setRun(!run); // run useEffect in parent Cart
           }}
-          className="btn btn-outline-danger mt-2 mb-2"
+          className="btn btn-outline-danger mt-3 mb-3"
         >
           Remove Product
         </button>
@@ -71,9 +70,9 @@ const Card = ({
 
   const showStock = (quantity) => {
     return quantity > 0 ? (
-      <span className="badge badge-primary badge-pill">In Stock</span>
+      <span className="badge">In Stock</span>
     ) : (
-      <span className="badge badge-danger badge-pill">Out of Stock</span>
+      <span className="badge">Out of Stock</span>
     );
   };
 
@@ -88,18 +87,14 @@ const Card = ({
   const showCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
-        <div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text">Adjust Quantity</span>
-            </div>
-            <input
-              type="number"
-              value={count}
-              className="form-control"
-              onChange={handleChange(product._id)}
-            />
-          </div>
+        <div className="form-group mb-3">
+          <label>Adjust Quantity</label>
+          <input
+            type="number"
+            value={count}
+            className="form-control"
+            onChange={handleChange(product._id)}
+          />
         </div>
       )
     );
@@ -107,26 +102,16 @@ const Card = ({
 
   return (
     <div className="card">
-      <div className="card-header name text-center">{product.name}</div>
-      <div className="card-body">
+      <ShowImage item={product} url="product" />
+      <div className="card-container">
         {shouldRedirect(redirect)}
-        <ShowImage item={product} url="product" />
-
-        <p className="mt-2">{product.description}</p>
-        <p className="font-weight-bold">₹ {product.price}</p>
-        <p className="black-10">
-          Category: {product.category && product.category.name}
-        </p>
-        <p className="black-8">Added {moment(product.createdAt).fromNow()}</p>
-
+        <p className="font-weight-bold">{product.price} VNĐ</p>
+        <p className="black-10">{product.name}</p>
         {showStock(product.quantity)}
         <br />
         {showViewButton(showViewProductButton)}
-
         {showRemoveButton(showRemoveProductButton)}
-
         {showAddToCart(showAddToCartButton)}
-
         {showCartUpdateOptions(cartUpdate)}
       </div>
     </div>

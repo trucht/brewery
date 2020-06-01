@@ -46,7 +46,7 @@ const AddCategory = () => {
         </div>
 
         <div>
-          <button onClick={clickSubmit} className="btn-submit">
+          <button onClick={clickSubmit} className="btn btn-outline-dark">
             Submit
           </button>
         </div>
@@ -66,7 +66,7 @@ const AddCategory = () => {
   };
 
   return (
-    <Layout title="Add a new Category" description={`Ready to add a new category?`} className="container">
+    <Layout title="Add a new Category" description={`Ready to add a new category?`} className="container py-5">
       <div className="row">
         <div>
           {showSuccess()}

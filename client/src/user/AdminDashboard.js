@@ -32,9 +32,9 @@ const AdminDashboard = () => {
       <div>
         <h2 className="font-weight-bold mb-5">Admin Information</h2>
         <div className="acc-info ml-3">
-          <p className="">{name}</p>
-          <p className="">{email}</p>
-          <p className="">{role === 1 ? "Admin" : `User ID: ${_id}`}</p>
+          <p>{name}</p>
+          <p>{email}</p>
+          <p>{role === 1 ? "Admin" : `User ID: ${_id}`}</p>
         </div>
       </div>
     );
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
     <Layout
       title="Admin Dashboard"
       description={`Welcome, ${name}`}
-      className="container"
+      className="container py-5"
     >
       <div className="row">
         <div className="col-sm-4">{adminOptions()}</div>

@@ -175,6 +175,7 @@ const UpdateProduct = ({ match }) => {
                 <select
                     onChange={handleChange("category")}
                     className="form-control"
+                    value={category}
                 >
                     <option>Please select</option>
                     {categories &&
@@ -191,6 +192,7 @@ const UpdateProduct = ({ match }) => {
                 <select
                     onChange={handleChange("shipping")}
                     className="form-control"
+                    value={shipping}
                 >
                     <option>Please select</option>
                     <option value="0">No</option>

@@ -3,6 +3,7 @@ import SidebarIcon from "./SidebarIcon";
 import { Transition } from "react-transition-group";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
+import {itemTotal} from '../core/CartHelpers';
 
 const duration =300;
 
@@ -13,9 +14,7 @@ const defaultStyle = {
 
 const sideBarIsOpen = (isOpen) => {
   if (isOpen) {
-    return {right: "0"};
-  } else {
-    return {right: "-11.5rem"};
+    return {width: "16rem"};
   }
 }
 
@@ -28,8 +27,8 @@ const transitionStyles = {
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
-    return { color: "#129de3" };
-  } else return { color: "#000000" };
+    return { color: "#C96E12" };
+  } else return { color: "#808080" };
 };
 
 export default class Sidebar extends Component {
@@ -102,15 +101,15 @@ export default class Sidebar extends Component {
               to="/cart"
             >
               Cart{" "}
-              {/* <sup>
+              <sup>
                   <small className="cart-badge">{itemTotal()}</small>
-                </sup> */}
+                </sup>
             </Link>
 
             <div className="sidebar-item">
               <span
                 className="sidebar-link"
-                style={{ cursor: "pointer", color: "#000000" }}
+                style={{ cursor: "pointer", color: "#808080" }}
                 onClick={() =>
                   signout(() => {
                     this.props.history.push("/");

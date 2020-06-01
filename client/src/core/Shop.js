@@ -117,7 +117,7 @@ const Shop = () => {
     <Layout
       title="Shop Page"
       description="Search and find books of your choice"
-      className="container-fluid"
+      className="container-fluid py-5"
     >
       <div className="row">
         <div className="col-4">
@@ -148,7 +148,6 @@ const Shop = () => {
               </div>
             ))}
           </div>
-          <hr />
           {loadMoreButton()}
         </div>
       </div>

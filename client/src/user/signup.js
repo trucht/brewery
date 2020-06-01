@@ -112,7 +112,7 @@ const Signup = () => {
   };
 
   return (
-    <Layout title="Create Account" description="Welcome to Brewery" className="container">
+    <Layout title="Create Account" description="Welcome to Brewery" className="container py-5">
       {showError()}
       {showSuccess()}
       {signupForm()}
