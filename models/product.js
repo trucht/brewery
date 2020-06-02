@@ -16,11 +16,11 @@ const productSchema = new mongoose.Schema(
       maxlength: 2000,
     },
 
-    abu: {
+    abv: {
       type: Number,
     },
 
-    ibv: {
+    ibu: {
       type: Number
     },
 
@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema(
 
     quantity: {
       type: Number,
+      default: 0,
     },
 
     sold: {

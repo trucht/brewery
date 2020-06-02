@@ -35,8 +35,8 @@ exports.create = async (req, res) => {
     const {
       name,
       description,
-      abu,
-      ibv,
+      abv,
+      ibu,
       price,
       category,
       shipping,
@@ -47,8 +47,8 @@ exports.create = async (req, res) => {
       [
         name,
         description,
-        abu,
-        ibv,
+        abv,
+        ibu,
         price,
         category,
         shipping,
@@ -96,7 +96,7 @@ exports.update = async (req, res) => {
       if (files.photo.size > 2000000) {
         return res.json({ error: "File size should be less than 2mb" });
       }
-      product.photo.data = fs.readFileSync(file.photo.path);
+      product.photo.data = fs.readFileSync(files.photo.path);
       product.photo.contentType = files.photo.type;
     }
 

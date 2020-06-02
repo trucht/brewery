@@ -117,10 +117,10 @@ const Shop = () => {
     <Layout
       title="Shop Page"
       description="Search and find books of your choice"
-      className="container-fluid py-5"
+      className="container py-5"
     >
       <div className="row">
-        <div className="col-4">
+        <div className="col-lg-3">
           <h4>Filter by categories</h4>
           <ul>
             <Checkbox
@@ -138,13 +138,13 @@ const Shop = () => {
           </div>
         </div>
 
-        <div className="col-8">
-          <h2 className="mb-4">Products</h2>
+        <div className="col-lg-9" >
+          <h2 className="container">Products</h2>
           {showLoading()}
           <div className="row">
             {filteredResults.map((product, i) => (
-              <div key={i} className="col-4 mb-3">
-                <Card product={product} />
+              <div key={i} className="col-lg-4 col-md-6 mb-4">
+                <Card product={product}/>
               </div>
             ))}
           </div>

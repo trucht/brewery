@@ -17,7 +17,8 @@ import Shop from "./core/Shop";
 import Cart from "./core/Cart";
 import Product from "./core/Product";
 import About from "./core/About";
-
+import RecoverPassword from "./auth/RecoverPassword";
+import ResetPassword from "./auth/ResetPassword";
 const Routes = () => {
   return (
     <BrowserRouter>
@@ -41,6 +42,8 @@ const Routes = () => {
           path="/admin/products/update/:productId"
           component={UpdateProduct}
         />
+        <Route exact path="/auth/recover" component={RecoverPassword} />
+        <Route exact path="/auth/reset/:token" component={ResetPassword} />
       </Switch>
     </BrowserRouter>
   );

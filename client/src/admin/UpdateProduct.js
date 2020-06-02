@@ -8,8 +8,8 @@ const UpdateProduct = ({ match }) => {
     const [values, setValues] = useState({
         name: "",
         description: "",
-        abu: "",
-        ibv: "",
+        abv: "",
+        ibu: "",
         price: "",
         categories: [],
         category: "",
@@ -27,8 +27,8 @@ const UpdateProduct = ({ match }) => {
     const {
         name,
         description,
-        abu,
-        ibv,
+        abv,
+        ibu,
         price,
         categories,
         category,
@@ -79,7 +79,7 @@ const UpdateProduct = ({ match }) => {
 
     useEffect(() => {
         init(match.params.productId);
-        //eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     const handleChange = name => event => {
@@ -142,13 +142,13 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label>abu</label>
-                <input onChange={handleChange('abu')} type="number" className="form-control" value={abu} />
+                <label>abv</label>
+                <input onChange={handleChange('abv')} type="number" className="form-control" value={abv} />
             </div>
 
             <div className="form-group">
-                <label>ibv</label>
-                <input onChange={handleChange('ibv')} type="number" className="form-control" value={ibv} />
+                <label>ibu</label>
+                <input onChange={handleChange('ibu')} type="number" className="form-control" value={ibu} />
             </div>
 
             <div className="form-group">

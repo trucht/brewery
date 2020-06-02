@@ -1,21 +1,20 @@
 // Register User
 export const signup = async (user) => {
-  return fetch (`/auth/signup`, {
+  return fetch(`/auth/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   })
-    .then(res => {
+    .then((res) => {
       return res.json();
     })
     .catch((err) => {
       console.log("err", err);
     });
 };
-
 
 // Login User
 export const signin = async (user) => {
@@ -69,4 +68,48 @@ export const isAuthenticated = () => {
   } else {
     return false;
   }
+};
+
+// Recover password
+export const recoverPassword = (email) => {
+  return fetch(`/auth/recover`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(email),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+//Get reset user
+export const reset = (token) => {
+  return fetch(`/auth/reset/${token}`, {
+    method: "GET"
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+}
+
+//Reset password
+export const resetPassword = (password, token) => {
+  const newPassword = {"password": password};
+  return fetch(`/auth/reset/${token}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newPassword),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { signin, authenticate, isAuthenticated } from "../auth";
 import Layout from "../components/Layout";
-
-
 
 const Signin = () => {
   const [values, setValues] = useState({
@@ -36,19 +34,36 @@ const Signin = () => {
   };
   const signinForm = () => {
     return (
-      <form className="form">
-        <div className="form-group">
-          <label>Email</label>
-          <input onChange={handleChange('email')} type="email" className="form-control" />
+      <div className="container">
+        <div className="row">
+          <form className="form">
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                onChange={handleChange("email")}
+                type="email"
+                className="form-control"
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                onChange={handleChange("password")}
+                type="password"
+                className="form-control"
+              />
+            </div>
+            <Link to="/auth/forgot-password">
+              Forgot your password?
+            </Link>
+            <div>
+              <button onClick={clickSubmit} className="btn-submit">
+                Sign In
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input onChange={handleChange('password')} type="password" className="form-control" />
-        </div>
-        <div>
-          <button onClick={clickSubmit} className="btn-submit">Sign In</button>
-        </div>
-      </form>
+      </div>
     );
   };
 
@@ -82,7 +97,11 @@ const Signin = () => {
   };
 
   return (
-    <Layout title="Member Login" description="Hello, Welcome Back!" className="container  py-5">
+    <Layout
+      title="Member Login"
+      description="Hello, Welcome Back!"
+      className="container  py-5"
+    >
       {showError()}
       {showLoading()}
       {redirectUser()}

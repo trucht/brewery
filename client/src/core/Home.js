@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import { getProducts } from "./CoreAPI";
 import Card from "../components/Card";
 import Search from "../components/Search";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faLinkedin,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Home = () => {
   const [productsbySell, setProductsBySell] = useState([]);
@@ -44,21 +51,26 @@ const Home = () => {
 
   const cultureSection = () => {
     return (
-      <div className="culture-section row">
-        <img
-          className="col-6"
-          src={require("../assets/images/beer-culture-img.png")}
-          alt="beer instruction"
-        />
-        <div className="col-6 detailed-instruction">
-          <h3 className="culture-title">
-            CONNECTING CULTURES THROUGH CRAFT BEER
-          </h3>
-          <p className="culture-content">
-            Ho Chi Minh City’s first in-house craft brewery located in the heart
-            of District 1. Delivering bold and authentic flavors using the
-            freshest and finest quality ingredients from the East to the West.
-          </p>
+      <div className="culture-section">
+        <div className="container">
+          <div className="row">
+            <img
+              className="col-lg-6"
+              src={require("../assets/images/beer-culture-img.png")}
+              alt="beer instruction"
+            />
+            <div className="col-lg-6 detailed-instruction">
+              <h3 className="culture-title">
+                CONNECTING CULTURES THROUGH CRAFT BEER
+              </h3>
+              <p className="culture-content">
+                Ho Chi Minh City’s first in-house craft brewery located in the
+                heart of District 1. Delivering bold and authentic flavors using
+                the freshest and finest quality ingredients from the East to the
+                West.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -104,6 +116,39 @@ const Home = () => {
     );
   };
 
+  const footer = () => {
+    return (
+      <div className="footer">
+        <div className="container">
+          <div className="row footer-content">
+            <div className="col-md-6 text-white">
+              <h3 className="mt-5 mb-3 font-weight-bold">Contact Us</h3>
+              <div className="row">
+                <p className="col-md-3">Address</p>
+                <p className="col-md-9">
+                  475A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM
+                </p>
+              </div>
+              <div className="row">
+                <p className="col-md-3">Phone</p>
+                <p className="col-md-9">+84 345 234 3456</p>
+              </div>
+              <div className="row">
+                <p className="col-md-3">Email</p>
+                <p className="col-md-9">tthuynh.xuantruc@gmail.com</p>
+              </div>
+              <h3 className="mt-5 mb-3 font-weight-bold">Social Media</h3>
+              <FontAwesomeIcon className="mr-3" icon={faFacebook} size="4x" />
+              <FontAwesomeIcon className="mr-3" icon={faInstagram} size="4x" />
+              <FontAwesomeIcon className="mr-3" icon={faLinkedin} size="4x" />
+            </div>
+            <div className="col-md-6"></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     loadProductsBySell();
     loadProductsByArrival();
@@ -118,28 +163,39 @@ const Home = () => {
       <Search />
       <h3 className="m-4 culture-title text-center">NEW ARRIVALS</h3>
       {showLoading()}
-      <div className="row container">
+      <div className="row px-5">
         {productsbyArrival.map((product, i) => (
-          <div key={i} className="col-4 mb-3">
+          <div key={i} className="col-lg-3 col-md-6 mb-4">
             <Card product={product} />
           </div>
         ))}
       </div>
-      <div className="signature">
-        <div className="signature-item">Highest quality ingredients</div>
-        <div className="signature-item">Soft and purified water used</div>
-        <div className="signature-item">New and modern equipments</div>
+      <div className="signature ">
+        <div className="container">
+          <div className="row">
+            <div className="signature-item col-lg-4">
+              Highest quality ingredients
+            </div>
+            <div className="signature-item col-lg-4">
+              Soft and purified water used
+            </div>
+            <div className="signature-item col-lg-4">
+              New and modern equipments
+            </div>
+          </div>
+        </div>
       </div>
       <h3 className="m-4 culture-title text-center">BEST SELLERS</h3>
       {showLoading()}
-      <div className="row container">
+      <div className="row px-5">
         {productsbySell.map((product, i) => (
-          <div key={i} className="col-4 mb-3">
+          <div key={i} className="col-lg-3 col-md-6 mb-4">
             <Card product={product} />
           </div>
         ))}
       </div>
       {mapSection()}
+      {footer()}
     </Layout>
   );
 };

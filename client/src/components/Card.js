@@ -101,18 +101,18 @@ const Card = ({
   };
 
   return (
-    <div className="card">
+    <div className="card h-100 rounded-0">
       <ShowImage item={product} url="product" />
-      <div className="card-container">
+      <div className="card-body">
         {shouldRedirect(redirect)}
-        <p className="font-weight-bold">{product.price} VNĐ</p>
-        <p className="black-10">{product.name}</p>
+        <p className="font-weight-bold card-title text-truncate">{product.name}</p>
+        <p className="black-10 card-text">{product.price} VNĐ</p>
         {showStock(product.quantity)}
         <br />
-        {showViewButton(showViewProductButton)}
-        {showRemoveButton(showRemoveProductButton)}
-        {showAddToCart(showAddToCartButton)}
-        {showCartUpdateOptions(cartUpdate)}
+          {showViewButton(showViewProductButton)}
+          {showRemoveButton(showRemoveProductButton)}
+          {showAddToCart(showAddToCartButton)}
+          {showCartUpdateOptions(cartUpdate)}
       </div>
     </div>
   );

@@ -77,7 +77,7 @@ const Search = () => {
 
   const searchForm = () => (
     <form onSubmit={searchSubmit}>
-      <div className="search-container">
+      <div className="search-container pt-5">
         <select className="custom-select" onChange={handleChange("category")}>
           <option value="All">All Categories</option>
           {categories.map((c, i) => (
@@ -86,7 +86,7 @@ const Search = () => {
             </option>
           ))}
         </select>
-        <div class="search-bar">
+        <div className="search-bar">
           <input
             type="search"
             className="input-search"

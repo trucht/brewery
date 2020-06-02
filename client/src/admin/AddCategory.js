@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { isAuthenticated } from "../auth";
-import { createCategory } from "./AdminAPI";
+// import { Link } from "react-router-dom";
+import { getCategories, createCategory, deleteCategory } from "./AdminAPI";
+import { useEffect } from "react";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -28,14 +31,36 @@ const AddCategory = () => {
       } else {
         setError(false);
         setSuccess(true);
+        loadCategories();
+      }
+    });
+  };
+
+  const loadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setCategories(data);
+      }
+    });
+  };
+
+  const destroy = (categoryId) => {
+    deleteCategory(categoryId, user._id, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        loadCategories();
       }
     });
   };
 
   const newCategoryForm = () => (
-    <form>
-        <div className="d-inline-block">
-          <label>Name</label>
+    <div className="row my-3">
+      <form className="form">
+        <div className="form-group">
+          <label className="text-weight-bold">Add new category</label>
           <input
             onChange={handleChange}
             type="name"
@@ -44,13 +69,13 @@ const AddCategory = () => {
             required
           />
         </div>
-
         <div>
-          <button onClick={clickSubmit} className="btn btn-outline-dark">
+          <button onClick={clickSubmit} className="btn btn-info">
             Submit
           </button>
         </div>
-    </form>
+      </form>
+    </div>
   );
 
   const showSuccess = () => {
@@ -65,14 +90,55 @@ const AddCategory = () => {
     }
   };
 
+  const manageCategories = () => {
+    return (
+      <div className="table-responsive">
+        <table className="table table-bordered">
+          <thead className="thead-dark">
+            <tr>
+              <th scope="col" className="text-center">
+                Category
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((cate, i) => (
+              <tr key={i}>
+                <td className="d-flex justify-content-between align-items-center">
+                  {cate.name}
+                  <div className="">
+                    <button className="btn btn-warning">Update</button>
+                    <button
+                      className="mx-3 btn btn-danger"
+                      onClick={() => destroy(cate._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
+
   return (
-    <Layout title="Add a new Category" description={`Ready to add a new category?`} className="container py-5">
-      <div className="row">
-        <div>
-          {showSuccess()}
-          {showError()}
-          {newCategoryForm()}
-        </div>
+    <Layout
+      title="Add a new Category"
+      description={`Ready to add a new category?`}
+      className="container py-5"
+    >
+      <div>
+        {showSuccess()}
+        {showError()}
+        {newCategoryForm()}
+        {manageCategories()}
       </div>
     </Layout>
   );

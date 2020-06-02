@@ -1,62 +1,95 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
 
-#root {
-  min-height: 100%;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
 
 body {
-
   font-family: 'Roboto Slab', serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  position: relative;
+  justify-content: center;
+  text-rendering: optimizeLegibility;
 }
 
 p {
   font-size: 1.5rem;
 }
 
-.container {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .row {
   width: 100%;
 }
 
+/* SIDEBAR */
+.sidebar {
+  min-height: 100%;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  font-family: 'Roboto Slab', serif;
+  background-color: #1C1C1C;
+  transition: 0.3s;
+  color: #C96E12;
+  width: 4.5rem;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 1rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.sidebar-link:hover {
+  background-color: #888888;
+  border-right: 0.25rem solid black;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+
 /*LAYOUT*/
 .layout {
-  height: 100%;
-  width: 100%;
-  padding-right: 2rem;
+  margin: 0;
   font-family: 'Roboto Slab', serif;
 }
 
-.header {
+
+/* HEADER */
+header {
   position: relative;
-  flex-wrap: wrap;
-  width: 100%;
-  min-height: 30rem;
+  height: 70vh;
   background-image: url('./assets/images/header-bg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-blend-mode: multiply;
-  background-color: #888888;
+  background-color: #c4c3c3;
 }
 
-.header-section {
-  margin-left: 5rem;
-  color: white;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.header-content {
+  min-width: 100%;
   position: absolute;
-  top: 50%;
+  top: 30%;
 }
 
-/* SEARCH */
+/* SEARCH BAR */
 .search-container {
   display: flex;
   width: 100%;
@@ -99,7 +132,7 @@ p {
   font-size: 20px;
 }
 
-/* HOME */
+/* HOME PAGE*/
 .signature {
   width: 100%;
   min-height: 8rem;
@@ -112,7 +145,6 @@ p {
   color: #7B3E0B;
   font-size: 1.5rem;
   margin: auto;
-  width: 33.3333%;
   text-align: center;
   vertical-align: middle;
 }
@@ -163,36 +195,7 @@ iframe {
   border: none;
 }
 
-/* SIDEBAR */
-.sidebar {
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  right: 0;
-  font-family: 'Roboto Slab', serif;
-  background-color: #1C1C1C;
-  min-height: 100%;
-  transition: 0.3s;
-  color: #C96E12;
-  width: 4.5rem;
-}
-
-.sidebar-link {
-  display: block;
-  padding: 1rem;
-  font-size: 2rem;
-  color: white;
-}
-
-.sidebar-link:hover {
-  background-color: #888888;
-  border-right: 0.25rem solid black;
-  vertical-align: middle;
-  text-decoration: none;
-}
-
-
-/* SIGN UP FORM */
+/*FORM */
 .form {
   border: 1px solid black;
   box-shadow: 10px 10px #888888;
@@ -206,7 +209,6 @@ iframe {
 }
 
 .form-control {
-  width: 100%;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
   margin: 0.75rem 0;
@@ -227,7 +229,6 @@ iframe {
 }
 
 /* USER DASHBOARD */
-
 .option-link {
   margin-bottom: 2rem;
   border: 0.25rem solid black;
@@ -251,13 +252,50 @@ iframe {
   font-size: 1.3rem;
 }
 
+
+/* CARD */
+.input-group-prepend {
+  height: 100%;
+}
+
+.badge {
+  min-height: 20px;
+  background-color: #FAE96F;
+  color: #07031a;
+}
+
+
+.card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+
+.card-img-top {
+  width: 100%;
+  height: 20vw;
+  object-fit: cover;
+}
+
 /* FOOTER */
 .footer {
-  min-height: 35rem;
-  background-image: url('./assets/images/hochiminh-img-1.jpg');
+  min-height: 80vh;
+  background-image: url('./assets/images/footer-bg.jpg');
+  background-attachment: fixed;
+  background-position: top;
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
+  background-blend-mode: multiply;
+
+}
+
+.footer-content {
+  font-size: 0.75rem;
+  padding-top: 5%;
 }
 
 .fixed-footer {
@@ -268,27 +306,4 @@ iframe {
   background-color: black;
   color: #888888;
   text-align: center;
-}
-
-/* CARD */
-.input-group-prepend {
-  height: 100%;
-}
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.1s;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.card-container {
-  padding: 2px 16px;
-}
-
-.badge {
-  min-height: 20px;
-  background-color: #FAE96F;
-  color: #07031a ;
 }

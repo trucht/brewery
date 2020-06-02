@@ -17,6 +17,33 @@ export const createCategory = async (userId, token, category) => {
     });
 };
 
+// Get categories from backend
+export const getCategories = () => {
+  return fetch(`/categories`, {
+    method: "GET",
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
+//Delete category
+export const deleteCategory = (categoryId, userId, token) => {
+  return fetch(`/categories/${categoryId}/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err));
+};
+
 // Create product
 export const createProduct = async (userId, token, product) => {
   return fetch(`/products/${userId}`, {
@@ -35,16 +62,6 @@ export const createProduct = async (userId, token, product) => {
     });
 };
 
-// Get categories from backend
-export const getCategories = () => {
-  return fetch(`/categories`, {
-    method: "GET",
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .catch((err) => console.log(err));
-};
 
 // Fetch all orders for admin
 export const listOrders = (userId, token) => {

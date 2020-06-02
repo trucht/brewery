@@ -10,8 +10,8 @@ const AddProduct = () => {
         name: '',
         description: '',
         price: '',
-        abu: 0,
-        ibv: 0,
+        abv: 0,
+        ibu: 0,
         categories: [],
         category: '',
         shipping: '',
@@ -23,7 +23,7 @@ const AddProduct = () => {
         formData: ''
     });
 
-    const {name, description, abu, ibv, price, categories, category, shipping, quantity,
+    const {name, description, abv, ibu, price, categories, category, shipping, quantity,
         loading, error, createdProduct, formData} = values;
 
     // load categories and form set data
@@ -56,9 +56,11 @@ const AddProduct = () => {
     const clickSubmit = e => {
         e.preventDefault();
         setValues({...values, error: '', loading: true});
+        console.log("AddProduct -> values", values)
 
         createProduct(user._id, token, formData)
         .then(data => {
+        console.log("AddProduct -> data", data)
             if(data.err)
             {
                 setValues({...values, error: data.err});
@@ -67,7 +69,7 @@ const AddProduct = () => {
             else
             {
                 setValues({
-                    ...values, name: '', description: '', photo: '', abu: 0, ibv: 0, price: '', quantity: 0, loading: '',
+                    ...values, name: '', description: '', photo: '', abv: 0, ibu: 0, price: '', quantity: 0, loading: '',
                     category: '', shipping: '',createdProduct: data.name
                 })
             }
@@ -95,13 +97,13 @@ const AddProduct = () => {
             </div>
 
             <div className="form-group">
-                <label>abu</label>
-                <input onChange={handleChange('abu')} type="number" className="form-control" value={abu} />
+                <label>abv</label>
+                <input onChange={handleChange('abv')} type="number" className="form-control" value={abv} />
             </div>
 
             <div className="form-group">
-                <label>ibv</label>
-                <input onChange={handleChange('ibv')} type="number" className="form-control" value={ibv} />
+                <label>ibu</label>
+                <input onChange={handleChange('ibu')} type="number" className="form-control" value={ibu} />
             </div>
 
             <div className="form-group">

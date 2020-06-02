@@ -34,6 +34,15 @@ var UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    resetPasswordToken: {
+      type: String,
+      required: false,
+    },
+
+    resetPasswordExpires: {
+      type: Date,
+      required: false,
+    },
   },
   { timestamps: true }
 );
@@ -57,14 +66,15 @@ UserSchema.path("hashed_password").validate(function (v) {
   }
 }, null);
 
-UserSchema.method('authenticate', function (plainText) {
+UserSchema.method("authenticate", function (plainText) {
   return this.encryptPassword(plainText) === this.hashed_password;
-})
+});
 
 UserSchema.methods = {
   authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
+
   encryptPassword: function (password) {
     if (!password) {
       return "";
@@ -78,9 +88,15 @@ UserSchema.methods = {
       return "";
     }
   },
+
   makeSalt: function () {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
+
+  generatePasswordReset: function () {
+    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+  }
 };
 
 module.exports = mongoose.model("User", UserSchema);

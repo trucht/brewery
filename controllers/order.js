@@ -8,7 +8,7 @@ let transporter = nodemailer.createTransport({
   service: "gmail",
   secure: false,
   auth: {
-    user: process.env.EMAILID,
+    user: process.env.EMAIL,
     pass: process.env.EMAILPASSWORD,
   },
   tls: {
@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
   //send email to admin
   let messageToAdmin = {
     from: "Beer Brewery",
-    to: process.env.ADMIN_EMAIL,
+    to: process.env.EMAIL,
     subject: "Hey admin, a purchase has been made!",
     text:
       "Hello, \n\nA purchase of " +

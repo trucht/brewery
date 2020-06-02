@@ -6,7 +6,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-const bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
+// var { createProxyMiddleware } = require("http-proxy-middleware");
 
 //Database
 var mongoose = require("mongoose");
@@ -19,32 +20,40 @@ var productsRouter = require("./routes/products");
 var ordersRouter = require("./routes/orders");
 var braintreeRouter = require("./routes/braintree");
 
-
 //MongoDB Setup
 mongoose.connect("mongodb://127.0.0.1:27017/brewerydb", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-  useCreateIndex: true
+  useCreateIndex: true,
 });
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
+db.once("open", function () {
   console.log("Database Connected...");
 });
 
-//Middlewares
-app.use(cors());
+// app.use(
+//   "/",
+//   createProxyMiddleware({
+//     target: "http://localhost:5000",
+//     secure: false,
+//     changeOrigin: true,
+//   })
+// );
+
 app.use(logger("dev"));
 
+app.use(cors());
+
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
-
+app.use(bodyParser.json());
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes middleware
@@ -55,19 +64,18 @@ app.use("/", productsRouter);
 app.use("/", ordersRouter);
 app.use("/", braintreeRouter);
 
-
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
   next(error);
- });
- // error handler middleware
- app.use((error, req, res, next) => {
-   res.status(error.status || 500).send({
+});
+// error handler middleware
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).send({
     error: {
-    status: error.status || 500,
-    message: error.message || 'Internal Server Error',
-   },
+      status: error.status || 500,
+      message: error.message || "Internal Server Error",
+    },
   });
- });
+});
 module.exports = app;

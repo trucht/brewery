@@ -35,11 +35,14 @@ const ManageProducts = (props) => {
   }, []);
 
   return (
-    <Layout title="Manage Products" description={`Perform CRUD on products`}>
+    <Layout
+      title="Manage Products"
+      description={`Perform CRUD on products`}
+      className="container py-5"
+    >
       <div className="row">
         <div className="col-12">
           <h2 className="text-center">Total {products.length} Products</h2>
-          <hr />
           <ul className="list-group">
             {products.map((p, i) => (
               <li
@@ -47,15 +50,19 @@ const ManageProducts = (props) => {
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <strong>{p.name}</strong>
-                <Link to={`/admin/products/update/${p._id}`}>
-                  <span className="badge badge-warning badge-pill">Update</span>
-                </Link>
-                <span
-                  onClick={() => destroy(p._id)}
-                  className="badge badge-danger badge-pill"
-                >
-                  Delete
-                </span>
+                <div>
+                  <Link to={`/admin/products/update/${p._id}`}>
+                    <span className="badge badge-warning badge-pill">
+                      Update
+                    </span>
+                  </Link>
+                  <span
+                    onClick={() => destroy(p._id)}
+                    className="ml-3 badge badge-danger badge-pill"
+                  >
+                    Delete
+                  </span>
+                </div>
               </li>
             ))}
           </ul>

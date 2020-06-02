@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const ShowImage = ({item, url}) => {
-    return (
-        <div className="product-img">
-            <img src={`/${url}/photo/${item._id}`} alt={item.name} className="mb-3" style={{maxHeight:"100%", maxWidth: "100%"}}/>
-        </div>
-    )
-}
+const ShowImage = ({ item, url }) => {
+  return (
+    <img
+      className="card-img-top responsive-img"
+      src={`/${url}/photo/${item._id}`}
+      alt={item.name}
+    />
+  );
+};
 
 export default ShowImage;

@@ -3,9 +3,9 @@ import SidebarIcon from "./SidebarIcon";
 import { Transition } from "react-transition-group";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
-import {itemTotal} from '../core/CartHelpers';
+import { itemTotal } from "../core/CartHelpers";
 
-const duration =300;
+const duration = 300;
 
 const defaultStyle = {
   transition: `opacity ${duration}ms ease-in-out`,
@@ -16,7 +16,7 @@ const sideBarIsOpen = (isOpen) => {
   if (isOpen) {
     return {width: "16rem"};
   }
-}
+};
 
 const transitionStyles = {
   entering: { opacity: 1 },
@@ -95,16 +95,18 @@ export default class Sidebar extends Component {
               </Link>
             )}
 
-            <Link
-              className="sidebar-link"
-              style={isActive(this.props.history, "/cart")}
-              to="/cart"
-            >
-              Cart{" "}
-              <sup>
+            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+              <Link
+                className="sidebar-link"
+                style={isActive(this.props.history, "/cart")}
+                to="/cart"
+              >
+                Cart{" "}
+                <sup>
                   <small className="cart-badge">{itemTotal()}</small>
                 </sup>
-            </Link>
+              </Link>
+            )}
 
             <div className="sidebar-item">
               <span
