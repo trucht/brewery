@@ -12,10 +12,10 @@ const AdminDashboard = () => {
     return (
       <div className="d-flex flex-wrap">
         <Link to="/create/category" className="option-link">
-          Create New Category
+          Manage Categories
         </Link>
         <Link to="/create/product" className="option-link">
-          Create New Product
+          Manage Products
         </Link>
         <Link to="/admin/orders" className="option-link">
           Manage Orders

@@ -71,14 +71,16 @@ export const isAuthenticated = () => {
 };
 
 // Recover password
-export const recoverPassword = (email) => {
+export const recoverPassword = (email, hostname) => {
+  const recoverEmail = {"email": email};
   return fetch(`/auth/recover`, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      RecoverHost:`${hostname}`,
     },
-    body: JSON.stringify(email),
+    body: JSON.stringify(recoverEmail),
   })
     .then((response) => {
       return response.json();

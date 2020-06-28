@@ -47,35 +47,34 @@ exports.signUp = async (req, res) => {
     if (err) {
       return res.json({ error: err });
     }
-    console.log(info);
+    return res.json(info);
   });
 };
 
 //Reset password
-exports.recover = function (req, res) {
+exports.recover = async (req, res) => {
   const email = req.body.email;
-  User.findOne({ email: email }, (err, user) => {
-    if (err || !user) {
-      return res.json({ error: "User not found" });
-    }
-    user.generatePasswordReset();
-    user.save().then((user) => {
-      const recoverURL = "http://"+ req.headers.host +"/auth/reset/" + user.resetPasswordToken;
-      const mailOptions = {
-        from: "Beer Brewery",
-        to: user.email,
-        subject: "Password change request",
-        text: `Hi ${user.name} \nPlease click on the following link ${recoverURL} to reset your password. \n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`,
-      };
 
-      transporter.sendMail(mailOptions, function (err, info) {
-        if (err) {
-          console.log("exports.recover -> err", err)
-          return res.json({ error: err });
-        }
-        console.log(info);
-        return;
-      });
+  let user = await User.findOne({ email: email });
+  if (!user) {
+    return res.json({ error: "User not found" });
+  }
+  user.generatePasswordReset();
+  await user.save().then((user) => {
+    const recoverURL =
+      "http://" + req.headers.recoverhost + "/auth/reset/" + user.resetPasswordToken;
+    const mailOptions = {
+      from: "Beer Brewery",
+      to: user.email,
+      subject: "Password change request",
+      text: `Hi ${user.name} \nPlease click on the following link ${recoverURL} to reset your password. \n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`,
+    };
+
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err) {
+        return res.json({ error: err });
+      }
+      return res.json(info);
     });
   });
 };
@@ -98,7 +97,6 @@ exports.reset = function (req, res) {
 };
 
 exports.resetPassword = async (req, res) => {
-
   User.findOne(
     {
       resetPasswordToken: req.params.token,
@@ -126,12 +124,11 @@ exports.resetPassword = async (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (err, info) => {
-          if(err) {
+          if (err) {
             return res.json({ error: err });
           }
-          res.status(200).json({message: 'Your password has been updated.'});
+          res.status(200).json({ message: "Your password has been updated." });
         });
-
       });
     }
   );

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import {reset, resetPassword} from "./index";
+import { reset, resetPassword } from "./index";
+import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
 
 class ResetPassword extends Component {
   constructor(props) {
@@ -8,9 +10,13 @@ class ResetPassword extends Component {
       password: "",
       confirmPassword: "",
       matchedPassword: true,
+      error: "",
+      success: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.showError = this.showError.bind(this);
+    this.showSuccess = this.showSuccess.bind(this);
   }
 
   init(token) {
@@ -35,55 +41,96 @@ class ResetPassword extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState({
-      matchedPassword: (this.state.confirmPassword === this.state.password)
+      matchedPassword: this.state.confirmPassword === this.state.password,
     });
     if (this.state.confirmPassword === this.state.password) {
-      resetPassword(this.state.password, this.props.match.params.token).then(data => {
-        if(data.error)
-        {
-          console.log("ResetPassword -> handleSubmit -> data.error", data.error)
+      resetPassword(this.state.password, this.props.match.params.token).then(
+        (data) => {
+          if (data.error) {
+            this.setState({
+              error: data.error,
+              success: false,
+            });
+          } else {
+            this.setState({
+              error: "",
+              success: true,
+            });
+          }
         }
-
-      })
+      );
+    } else {
+      this.setState({
+        error: "Passwords are not matched",
+      });
     }
   }
 
   showError() {
     return (
       <div>
-        {!this.state.matchedPassword && (
-          <div className="alert alert-danger" role="alert">
-            Password aren't matched
-          </div>
-        )}
+        <div
+          className="alert alert-danger"
+          style={{
+            textAlign: "center",
+            display: this.state.error ? "" : "none",
+          }}
+        >
+          {this.state.error}
+        </div>
+      </div>
+    );
+  }
+
+  showSuccess() {
+    return (
+      <div
+        className="alert alert-info"
+        style={{
+          textAlign: "center",
+          display: this.state.success ? "" : "none",
+        }}
+      >
+        Your password has been updated. Please <Link to="/signin">Signin</Link>
       </div>
     );
   }
 
   render() {
     return (
-      <div>
-        <form>
-          <label>New Password</label>
-          <input
-            name="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            autoComplete="password"
-            type="password"
-          />
-          <label>Confirm New Password</label>
-          <input
-            name="confirmPassword"
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-            autoComplete="confirm-password"
-            type="password"
-          />
-          {this.showError()}
-          <button onClick={this.handleSubmit}>Submit</button>
-        </form>
-      </div>
+      <Layout
+        className="container py-5"
+        title="Reset Password"
+        description="Please update your new password here"
+      >
+        {this.showSuccess()}
+        {this.showError()}
+        <div className="row">
+          <form className="form">
+            <label>New Password</label>
+            <input
+              className="form-control"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              autoComplete="password"
+              type="password"
+            />
+            <label>Confirm New Password</label>
+            <input
+              className="form-control"
+              name="confirmPassword"
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+              autoComplete="confirm-password"
+              type="password"
+            />
+            <button onClick={this.handleSubmit} className="btn-submit">
+              Submit
+            </button>
+          </form>
+        </div>
+      </Layout>
     );
   }
 }

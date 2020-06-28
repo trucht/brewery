@@ -10,7 +10,7 @@ var {
   reset,
   resetPassword
 } = require("../controllers/auth");
-var { userValidationRules, validate } = require("../validator");
+var { userValidationRules, resetPasswordRule, validate } = require("../validator");
 
 router.route('/auth/signup').post(userValidationRules(), validate, signUp);
 
@@ -22,6 +22,6 @@ router.route('/auth/recover').post(recover);
 
 router.route('/auth/reset/:token')
   .get(reset)
-  .put(resetPassword);
+  .put(resetPasswordRule(), validate, resetPassword);
 
 module.exports = router;

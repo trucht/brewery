@@ -8,28 +8,29 @@ import { useEffect } from "react";
 const AddCategory = () => {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
   // Destructure user and token from localstorage
   const { user, token } = isAuthenticated();
 
   const handleChange = (e) => {
-    setError(false);
+    setError("");
     setName(e.target.value);
+    setSuccess(false);
   };
 
   const clickSubmit = (e) => {
     e.preventDefault();
-    setError(false);
+    setError("");
     setSuccess(false);
 
     // make request to backend to create category
     createCategory(user._id, token, { name }).then((data) => {
       if (data.error) {
-        setError(true);
+        setError(data.error);
       } else {
-        setError(false);
+        setError("");
         setSuccess(true);
         loadCategories();
       }
@@ -39,9 +40,10 @@ const AddCategory = () => {
   const loadCategories = () => {
     getCategories().then((data) => {
       if (data.error) {
-        console.log(data.error);
+        setError(data.error);
       } else {
         setCategories(data);
+        setError("");
       }
     });
   };
@@ -49,16 +51,18 @@ const AddCategory = () => {
   const destroy = (categoryId) => {
     deleteCategory(categoryId, user._id, token).then((data) => {
       if (data.error) {
-        console.log(data.error);
+        setError(data.error);
+        setSuccess(false);
       } else {
         loadCategories();
+        setError("");
       }
     });
   };
 
   const newCategoryForm = () => (
-    <div className="row my-3">
-      <form className="form">
+    <div className="row mb-5">
+      <form className="form" >
         <div className="form-group">
           <label className="text-weight-bold">Add new category</label>
           <input
@@ -86,7 +90,7 @@ const AddCategory = () => {
 
   const showError = () => {
     if (error) {
-      return <h3 className="text-danger">{name} is not unique</h3>;
+    return <h3 className="text-danger">{error}</h3>;
     }
   };
 

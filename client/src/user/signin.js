@@ -53,7 +53,7 @@ const Signin = () => {
                 className="form-control"
               />
             </div>
-            <Link to="/auth/forgot-password">
+            <Link to="/auth/recover" style={{color: "black"}}>
               Forgot your password?
             </Link>
             <div>
